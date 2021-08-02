@@ -2,6 +2,7 @@
     <div class="cards">
         <h2>{{department.name}}</h2>
         <mat-card>
+
             <mat-form-field>
                 <input matInput [formControl]="employeeNameFC" placeholder="Employee Name" type="text">
                 <mat-error *ngIf="employeeNameFC.hasError('duplicate')">Duplicate Name</mat-error>
@@ -9,7 +10,18 @@
             <button mat-mini-fab color="primary" (click)="addEmployee()" [disabled]="employeeNameFC.invalid">
               <mat-icon>add</mat-icon>
           </button>
-          <div>{{employees | json}}</div>
+      
+        </mat-card>
+        <mat-card class="hours">
+            <table>
+                <thead>
+                    <th>Name</th>
+                    <th *ngFor="let day of weekdays">{{day}}</th>
+                    <th>Total Hours</th>
+                    <th></th>
+                </thead>
+                
+            </table>
         </mat-card>
     </div>
 </div>

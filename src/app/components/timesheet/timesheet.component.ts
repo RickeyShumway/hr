@@ -15,7 +15,7 @@ export class TimesheetComponent implements OnInit {
   employeeNameFC = new FormControl('', this.nameValidator());
   employees: Employee[] = [];
   employeeId = 0;
-
+  weekdays: string[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +26,6 @@ export class TimesheetComponent implements OnInit {
   ngOnInit(): void {
     this.departments = this.departmentService.departments;
     this.department = this.departments.find(x => x.id === this.route.snapshot.params['id']);
-
   }
   addEmployee(): void {
     if (this.employeeNameFC.value) {
@@ -37,6 +36,13 @@ export class TimesheetComponent implements OnInit {
             departmentId: this.department.id,
             name: this.employeeNameFC.value,
             payRate: Math.floor(Math.random() * 50) + 50,
+            monday: 0,
+            tuesday: 0,
+            wednesday: 0,
+            thursday: 0,
+            friday: 0,
+            saturday: 0,
+            sunday: 0
         });
 
         this.employeeNameFC.setValue('');
