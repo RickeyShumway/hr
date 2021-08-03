@@ -30,7 +30,6 @@ export class TimesheetComponent implements OnInit {
   addEmployee(): void {
     if (this.employeeNameFC.value) {
         this.employeeId++;
-
         this.employees.push({
             id: this.employeeId.toString(),
             departmentId: this.department.id,
@@ -61,5 +60,12 @@ nameValidator(): ValidatorFn {
       }
       return error;
   };
+}
+getTotalHours(employee: Employee): number {
+  return employee.monday + employee.tuesday + employee.wednesday
+      + employee.thursday + employee.friday + employee.saturday + employee.sunday;
+}
+deleteEmployee(index: number): void {
+  this.employees.splice(index, 1);
 }
 }
