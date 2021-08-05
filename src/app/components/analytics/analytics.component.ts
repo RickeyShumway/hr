@@ -8,7 +8,7 @@ import {Employee} from 'src/app/interfaces/employee'
 })
 export class AnalyticsComponent implements OnInit {
   employees: Employee[] = [];
-employeeData: Employee[] = [
+  employeeData: Employee[] = [
     {
         departmentId: '1',
         friday: 6,
@@ -62,8 +62,8 @@ employeeData: Employee[] = [
         wednesday: 5
     }
 ];
-  constructor() { 
-    
+  constructor() {
+
   }
 
   ngOnInit(): void {
