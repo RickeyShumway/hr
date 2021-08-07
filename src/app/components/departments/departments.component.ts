@@ -11,12 +11,14 @@ import { Router } from '@angular/router';
 export class DepartmentsComponent implements OnInit {
   departments: Department[] = [];
   constructor(
-    private DepartmentService: DepartmentService,
+    private departmentService: DepartmentService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.departments = this.DepartmentService.departments;
+    this.departmentService.getDepartments().subscribe(departments => {
+      this.departments = departments;
+  });
   }
   goToDepartment(departmentId: string): void {
       this.router.navigate(['./timesheet', {id: departmentId}]);
