@@ -68,4 +68,7 @@ getTotalHours(employee: Employee): number {
 deleteEmployee(index: number): void {
   this.employees.splice(index, 1);
 }
+submit() {
+  
+}
 }
