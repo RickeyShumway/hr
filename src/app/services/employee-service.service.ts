@@ -41,6 +41,9 @@ getEmployeeHoursByDepartment(departmentId: string): Observable<Employee[]> {
 updateEmployeeHours(employee: Employee): any {
   this.db.collection('employee-hours').doc(employee.id).set(employee);
 }
+deleteEmployeeHours(employee: Employee): any {
+  this.db.collection('employee-hours').doc(employee.id).delete();
+}
 
 
 }
