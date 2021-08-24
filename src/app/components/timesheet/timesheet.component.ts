@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DepartmentService } from 'src/app/services/department.service';
 import { Department } from 'src/app/interfaces/department';
 import { FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 import { Employee } from '../../interfaces/employee';
+import { EmployeeServiceService } from '../../services/employee-service.service';
+
 @Component({
   selector: 'app-timesheet',
   templateUrl: './timesheet.component.html',
@@ -19,13 +21,19 @@ export class TimesheetComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private departmentService: DepartmentService
+    private departmentService: DepartmentService,
+    private employeeService: EmployeeServiceService,
+    private router: Router,
 
   ) { }
 
   ngOnInit(): void {
     this.departments = this.departmentService.departments;
     this.department = this.departments.find(x => x.id === this.route.snapshot.params['id']);
+    this.employeeService.getEmployeeHoursByDepartment(this.department.id).subscribe(employees => {
+      this.employees = employees;
+  });
+  
   }
   addEmployee(): void {
     if (this.employeeNameFC.value) {
@@ -68,7 +76,17 @@ getTotalHours(employee: Employee): number {
 deleteEmployee(index: number): void {
   this.employees.splice(index, 1);
 }
-submit() {
-  
+submit(): void {
+  this.employees.forEach(employee => {
+      if (employee.id) {
+          this.employeeService.updateEmployeeHours(employee);
+      } else {
+          this.employeeService.saveEmployeeHours(employee);
+      }
+  });
+
+  this.router.navigate(['./departments']);
 }
+
+
 }

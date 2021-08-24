@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Employee } from 'src/app/interfaces/employee'
+import { EmployeeServiceService } from 'src/app/services/employee-service.service';
+import { TitleCasePipe } from '@angular/common'
 
 @Component({
   selector: 'app-analytics-table',
@@ -65,10 +67,16 @@ export class AnalyticsTableComponent implements OnInit {
         wednesday: 5
     }
 ];
-  constructor() { }
+  constructor(
+    private employeeService: EmployeeServiceService,
+  ) { }
 
   ngOnInit(): void {
-    this.employees = this.employeeData.filter(employee => employee.departmentId === this.departmentId);
+    // this.employees = this.employeeData.filter(employee => employee.departmentId === this.departmentId);
+    this.employeeService.getEmployeeHoursByDepartment(this.departmentId).subscribe((employees: Employee[]) => {
+      this.employees = employees;
+  });
+  
 }
 getTotalHours(employee: Employee): number {
   return employee.monday + employee.tuesday + employee.wednesday
